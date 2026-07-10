@@ -1,0 +1,77 @@
+---
+title: "Share the Birthday Card via File, Link, or QR Code"
+sidebarTitle: "Sharing"
+description: "Explore four ways to share the Birthday greeting card: email attachment, direct file, hosted link, or a scannable QR code for in-person delivery."
+---
+
+Once your Birthday card is ready, getting it in front of the recipient is just as important as building it. Whether you want to send a surprise link, hand over a USB drive at a party, or hang a scannable QR code on the wall, there's a sharing method that fits every situation. This page walks through four practical options and helps you pick the right one for your occasion.
+
+## Sharing Methods
+
+<CardGroup cols={2}>
+  <Card title="Email Attachment" icon="envelope">
+    Attach `index.html` directly to an email. The recipient downloads the file
+    and opens it in any browser — no internet connection required after
+    download, and every animation plays exactly as intended.
+  </Card>
+  <Card title="Hosted Link" icon="link">
+    Deploy the card to GitHub Pages, Netlify, or Vercel and paste the URL into
+    any messaging app, social post, or group chat. The recipient taps the link
+    and the card opens instantly in their browser.
+  </Card>
+  <Card title="USB / Direct File" icon="usb-drive">
+    Copy `index.html` to a USB drive, SD card, or share it via AirDrop /
+    Nearby Share. This works completely offline and is a great option for
+    in-person delivery at a party where internet may be unreliable.
+  </Card>
+  <Card title="QR Code" icon="qrcode">
+    Generate a QR code from the hosted URL and print it on a card, a banner,
+    or display it on your phone screen. The recipient scans it and the greeting
+    opens immediately — no typing required.
+  </Card>
+</CardGroup>
+
+## Generating a QR Code
+
+A QR code turns your hosted URL into something anyone can scan with a phone camera, making it perfect for physical cards, invitations, or party decorations.
+
+1. **Deploy the card first** — you need a public URL (see the [Hosting guide](/deployment/hosting) if you haven't done this yet).
+2. **Open a free QR generator** — [goqr.me](https://goqr.me) and [qr-code-generator.com](https://www.qr-code-generator.com) both work without creating an account.
+3. **Paste your hosted URL** into the input field and click **Generate**.
+4. **Download the PNG** (or SVG for print) and include it wherever you like — a printed birthday card, a WhatsApp message, or a slide in a presentation.
+
+Optionally, you can embed the QR code image directly inside `index.html` so the digital card contains its own shareable link:
+
+```html
+<!-- Paste this anywhere inside the .card div in index.html -->
+<img
+  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fyour-url-here"
+  alt="Scan to share this card"
+  style="margin-top: 20px; border-radius: 8px;"
+/>
+```
+
+Replace the `data=` value with your actual hosted URL (URL-encoded).
+
+## Personalizing the URL
+
+A link like `https://quirky-fox-4a2b91.netlify.app` gets the job done, but a customized subdomain feels more thoughtful and is easier to remember.
+
+- **Netlify** — go to **Site settings → General → Site details → Site name** and change it to something like `feliz-cumpleanos-carlos.netlify.app`.
+- **Vercel** — in the project dashboard, go to **Settings → Domains** and add a custom alias such as `cumple-sofia.vercel.app`.
+
+Neither option requires a paid plan — both platforms allow subdomain customization on their free tiers.
+
+<Tip>
+  Run the hosted URL through a URL shortener like [bit.ly](https://bitly.com)
+  or [tinyurl.com](https://tinyurl.com) to create a compact link that's easy
+  to type in a text message, fits on a printed label, or looks clean when
+  pasted into a social caption.
+</Tip>
+
+<Note>
+  When sharing `index.html` as an email attachment, some corporate and school
+  email servers automatically block `.html` attachments as a security measure.
+  If the recipient never receives the file, hosting the card and sharing the
+  link is the more reliable alternative — and it works in every email client.
+</Note>

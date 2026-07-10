@@ -1,0 +1,212 @@
+---
+title: "How the Birthday Card Works: Structure & Animations"
+sidebarTitle: "How It Works"
+description: "Explore the HTML structure, CSS classes, and three keyframe animations that make the Birthday card interactive, responsive, and festive."
+---
+
+This page walks through the internals of `index.html` — how the document is laid out, what each CSS class is responsible for, and exactly how the three keyframe animations bring the card to life. Whether you want to make a small tweak or understand every moving part, this is the right place to start.
+
+## Page Structure
+
+The document uses a minimal DOM: a single `.container` wrapper holds the four balloon `<div>` elements and the `.card` block. All content visible to the reader lives inside `.card`. There is no JavaScript — every interactive and animated effect is driven purely by CSS.
+
+Here is the full top-level HTML skeleton:
+
+```html
+<div class="container">
+
+  <div class="balloon b1"></div>
+  <div class="balloon b2"></div>
+  <div class="balloon b3"></div>
+  <div class="balloon b4"></div>
+
+  <div class="card">
+
+    <h1>🎉 ¡Feliz Cumpleaños! 🎉</h1>
+    <h2>MÁS QUE UN AMIGO UN HERMANO</h2>
+
+    <div class="cake">🎂</div>
+
+    <p class="intro">…</p>
+
+    <ul class="birthday-list">
+      <li>🎁 Que todos tus sueños se conviertan en realidad.</li>
+      <li>🌟 Que cada día esté lleno de felicidad y sonrisas.</li>
+      <li>🚀 Que alcances todas las metas que te propongas.</li>
+      <li>❤️ Que nunca te falten personas que te quieran.</li>
+      <li>🎊 Que disfrutes al máximo este día tan especial.</li>
+    </ul>
+
+    <p class="final-message">…</p>
+    <div class="signature">❤️ Con mucho amor y cariño.</div>
+
+  </div>
+</div>
+```
+
+### CSS Class Reference
+
+| Class | Role | Key Style Properties |
+|---|---|---|
+| `body` | Full-viewport centered background | `background: linear-gradient(135deg, #ff758c, #ff7eb3, #7afcff)`, `display: flex`, `justify-content: center`, `align-items: center` |
+| `.container` | Outer wrapper, anchors balloons | `position: relative`, `width: 100%`, `max-width: 800px` |
+| `.balloon` | Floating colored circles | `position: absolute`, `width: 70px`, `height: 90px`, `border-radius: 50%`, `animation: float 5s ease-in-out infinite` |
+| `.balloon::after` | String hanging below each balloon | `content: ""`, `width: 2px`, `height: 70px`, `background: #888`, positioned at `left: 50%`, `top: 90px` |
+| `.b1` | Pink balloon, top-left | `background: #ff4d6d`, `left: -20px`, `top: 50px`, `animation-delay: 0s` |
+| `.b2` | Teal balloon, top-right | `background: #4ecdc4`, `right: -20px`, `top: 120px`, `animation-delay: 1s` |
+| `.b3` | Yellow balloon, bottom-left | `background: #ffd166`, `left: 40px`, `bottom: 80px`, `animation-delay: 2s` |
+| `.b4` | Purple balloon, bottom-right | `background: #9b5de5`, `right: 40px`, `bottom: 60px`, `animation-delay: 3s` |
+| `.card` | White semi-transparent card panel | `background: rgba(255,255,255,0.96)`, `border-radius: 30px`, `padding: 50px 35px`, `box-shadow: 0 20px 50px rgba(0,0,0,.15)`, `animation: fadeIn 1s ease` |
+| `h1` | Main birthday heading | `font-size: 3rem`, `color: #ff4d6d`, `margin-bottom: 10px` |
+| `h2` | Subheading / recipient name | `color: #444`, `font-size: 2rem`, `margin-bottom: 15px` |
+| `.cake` | Bouncing cake emoji wrapper | `font-size: 5rem`, `margin: 20px 0`, `animation: bounce 2s infinite` |
+| `.intro` | Opening paragraph | `color: #666`, `font-size: 1.15rem`, `line-height: 1.6` |
+| `.birthday-list` | Wish list container | `list-style: none`, `padding: 0`, `margin: 30px 0` |
+| `.birthday-list li` | Individual wish item | `background: linear-gradient(135deg, #fff5f7, #ffe0ec)`, `border-radius: 18px`, `padding: 18px 20px`, `transition: .35s`, `position: relative` |
+| `.birthday-list li::before` | Sparkle decoration on each wish | `content: "✨"`, `font-size: 1.2rem`, `margin-right: 10px` |
+| `.birthday-list li:hover` | Hover state — slides right + deeper shadow | `transform: translateX(10px)`, `box-shadow: 0 12px 25px rgba(255,77,109,.25)` |
+| `.final-message` | Closing paragraph below the list | `margin-top: 25px`, `color: #555`, `font-size: 1.1rem`, `line-height: 1.8` |
+| `.signature` | Signed name at the bottom | `margin-top: 30px`, `font-size: 1.2rem`, `font-weight: bold`, `color: #ff4d6d` |
+
+---
+
+## CSS Animations
+
+Birthday uses three `@keyframes` declarations — each targeting a different element and a different kind of motion.
+
+### 1. `bounce` — Cake Emoji
+
+The `.cake` element bobs vertically in a 2-second loop, creating a playful bobbing effect that draws the reader's eye toward the center of the card.
+
+- **Applied to:** `.cake`
+- **Duration:** `2s`
+- **Iteration:** `infinite`
+
+```css
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
+}
+```
+
+### 2. `float` — Balloons
+
+Each of the four `.balloon` elements floats up and down continuously using the same keyframe, but with staggered `animation-delay` values so they never all peak at the same moment — giving the card a natural, lively feel.
+
+- **Applied to:** `.balloon`
+- **Duration:** `5s`
+- **Timing function:** `ease-in-out`
+- **Iteration:** `infinite`
+- **Delays:** `.b1` → `0s`, `.b2` → `1s`, `.b3` → `2s`, `.b4` → `3s`
+
+```css
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-20px);
+    }
+}
+```
+
+### 3. `fadeIn` — Card Entrance
+
+When the page loads, the `.card` element slides up 30px and fades from fully transparent to fully opaque over 1 second. This gives the card a polished entrance without any JavaScript.
+
+- **Applied to:** `.card`
+- **Duration:** `1s`
+- **Timing function:** `ease`
+- **Iteration:** runs once (no `infinite`)
+
+```css
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+```
+
+---
+
+## Responsive Breakpoints
+
+The card adapts to smaller screens through two media query blocks that progressively reduce font sizes, adjust padding, and — at the smallest breakpoint — hide the balloons entirely to keep the layout uncluttered.
+
+### `max-width: 768px` — Tablet & Large Mobile
+
+```css
+@media (max-width:768px){
+
+    .card{
+        padding:35px 20px;
+    }
+
+    h1{
+        font-size:2.2rem;
+    }
+
+    h2{
+        font-size:1.5rem;
+    }
+
+    .cake{
+        font-size:4rem;
+    }
+
+    .birthday-list li{
+        font-size:1rem;
+    }
+}
+```
+
+| Property | Desktop value | ≤ 768px value |
+|---|---|---|
+| `.card` padding | `50px 35px` | `35px 20px` |
+| `h1` font-size | `3rem` | `2.2rem` |
+| `h2` font-size | `2rem` | `1.5rem` |
+| `.cake` font-size | `5rem` | `4rem` |
+| `.birthday-list li` font-size | `1.05rem` | `1rem` |
+
+### `max-width: 480px` — Small Mobile
+
+```css
+@media (max-width:480px){
+
+    h1{
+        font-size:1.8rem;
+    }
+
+    h2{
+        font-size:1.3rem;
+    }
+
+    .cake{
+        font-size:3.5rem;
+    }
+
+    .balloon{
+        display:none;
+    }
+}
+```
+
+| Property | ≤ 768px value | ≤ 480px value |
+|---|---|---|
+| `h1` font-size | `2.2rem` | `1.8rem` |
+| `h2` font-size | `1.5rem` | `1.3rem` |
+| `.cake` font-size | `4rem` | `3.5rem` |
+| `.balloon` visibility | visible | `display: none` |
+
+<Tip>
+  Balloons are hidden on screens narrower than 480px (`display: none`) because their absolute positioning relative to `.container` would overlap or clip the card content on very small viewports. If you want to keep balloons on small screens, try switching their positioning to `fixed` or reducing their size in the 480px media query instead of hiding them.
+</Tip>

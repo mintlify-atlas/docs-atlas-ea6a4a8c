@@ -1,0 +1,165 @@
+---
+title: "Customize Birthday Card Colors and Theme"
+sidebarTitle: "Colors"
+description: "Change the gradient background, card accent color, balloon fills, and typography color in the Birthday card by editing a handful of CSS values."
+---
+
+The Birthday card's entire visual palette — from the sweeping gradient behind the card to the pink accents on headings and the colored balloons floating at the edges — is controlled by a single `<style>` block inside `index.html`. There is no external stylesheet to download or link. Every color change you need to make is in that one file, so open it in your editor, find the relevant rule, and update the value.
+
+## Background Gradient
+
+The page background is a three-stop diagonal linear gradient applied to the `body` element.
+
+```css
+body {
+    background: linear-gradient(
+        135deg,
+        #ff758c,
+        #ff7eb3,
+        #7afcff
+    );
+}
+```
+
+**Changing the angle** — `135deg` sweeps from top-left to bottom-right. Use `90deg` for a top-to-bottom flow, `180deg` for bottom-to-top, or any value from `0` to `360`.
+
+**Changing the color stops** — replace any of the three hex values with your own colors. You can also add or remove stops: `linear-gradient(135deg, #a, #b, #c, #d)` produces four stops. The browser blends between them in order.
+
+## Card & Text Colors
+
+The following table lists every color-carrying rule in the card's main content area. All values come directly from the `<style>` block.
+
+| Element | CSS Property | Default Value |
+|---|---|---|
+| `.card` | `background` | `rgba(255,255,255,0.96)` |
+| `h1` | `color` | `#ff4d6d` |
+| `h2` | `color` | `#444` |
+| `.intro` | `color` | `#666` |
+| `.birthday-list li` | `background` (gradient start) | `#fff5f7` |
+| `.birthday-list li` | `background` (gradient end) | `#ffe0ec` |
+| `.birthday-list li` | `color` | `#555` |
+| `.signature` | `color` | `#ff4d6d` |
+
+The `.card` background uses an `rgba` value with `0.96` alpha so the gradient behind it faintly bleeds through the white surface, giving the card a soft luminous quality. Lowering the alpha (e.g., `0.85`) makes the effect more pronounced; raising it to `1` removes it entirely.
+
+The `h1` and `.signature` both use `#ff4d6d` — the primary pink-red accent. Changing one of these without the other will make the heading and sign-off feel visually inconsistent, so update them together.
+
+## Balloon Colors
+
+Four balloons float around the card's container, each with its own background color set by a modifier class.
+
+```css
+.b1 { background: #ff4d6d; }   /* pink-red  */
+.b2 { background: #4ecdc4; }   /* teal      */
+.b3 { background: #ffd166; }   /* yellow    */
+.b4 { background: #9b5de5; }   /* purple    */
+```
+
+To change a balloon's color, find the corresponding class (`.b1` through `.b4`) in the `<style>` block and replace the `background` hex value. You can also use `rgba()`, `hsl()`, or a CSS gradient — the balloon shape is just a `border-radius: 50%` div, so any valid CSS background value works.
+
+The string attached to each balloon is rendered via `::after` using `background: #888`. Change that value in the `.balloon::after` rule if you want the strings to match your new palette.
+
+## Box Shadows
+
+Two shadow rules contribute to the card's depth.
+
+**Card shadow** — the outer card panel has a large, soft drop shadow:
+
+```css
+.card {
+    box-shadow: 0 20px 50px rgba(0,0,0,.15);
+}
+```
+
+Increase the spread (`50px`) or opacity (`.15`) to make the card feel more elevated. Decrease them for a flatter look.
+
+**Wish list item shadow** — each list item has a tinted pink shadow that echoes the accent color:
+
+```css
+.birthday-list li {
+    box-shadow: 0 8px 20px rgba(255,77,109,.15);
+}
+```
+
+The `rgba(255,77,109, …)` value is the decimal equivalent of `#ff4d6d`. If you change the primary accent color, update this shadow color to match. The hover state escalates the opacity to `.25` — find `.birthday-list li:hover` and update that rule as well.
+
+<Tip>
+  Rather than hunting down every occurrence of `#ff4d6d` manually, consider refactoring the `<style>` block to use CSS custom properties (variables). Declare your palette at the top of the style block and reference the variables everywhere:
+
+  ```css
+  :root {
+    --color-accent:  #ff4d6d;
+    --color-body:    #555;
+    --color-muted:   #666;
+  }
+
+  h1            { color: var(--color-accent); }
+  .signature    { color: var(--color-accent); }
+  .birthday-list li { color: var(--color-body); }
+  .intro        { color: var(--color-muted); }
+  ```
+
+  With this structure, a full palette swap requires changing only the three `:root` values instead of editing every individual rule.
+</Tip>
+
+## Blue / Ocean Theme Example
+
+The example below shows the original pink palette alongside a complete blue/ocean re-theme. Only the color values change — every selector and property name stays the same.
+
+<CodeGroup>
+
+```css Original
+body {
+    background: linear-gradient(
+        135deg,
+        #ff758c,
+        #ff7eb3,
+        #7afcff
+    );
+}
+
+h1         { color: #ff4d6d; }
+h2         { color: #444; }
+.intro     { color: #666; }
+.signature { color: #ff4d6d; }
+
+.birthday-list li {
+    background: linear-gradient(135deg, #fff5f7, #ffe0ec);
+    color: #555;
+    box-shadow: 0 8px 20px rgba(255,77,109,.15);
+}
+
+.b1 { background: #ff4d6d; }
+.b2 { background: #4ecdc4; }
+.b3 { background: #ffd166; }
+.b4 { background: #9b5de5; }
+```
+
+```css Blue Theme
+body {
+    background: linear-gradient(
+        135deg,
+        #0077b6,
+        #00b4d8,
+        #90e0ef
+    );
+}
+
+h1         { color: #0077b6; }
+h2         { color: #023e8a; }
+.intro     { color: #4a5568; }
+.signature { color: #0077b6; }
+
+.birthday-list li {
+    background: linear-gradient(135deg, #f0f9ff, #caf0f8);
+    color: #2d3748;
+    box-shadow: 0 8px 20px rgba(0,119,182,.15);
+}
+
+.b1 { background: #0077b6; }
+.b2 { background: #00b4d8; }
+.b3 { background: #48cae4; }
+.b4 { background: #023e8a; }
+```
+
+</CodeGroup>

@@ -1,0 +1,61 @@
+---
+title: "Birthday: A Single-File Animated Greeting Card"
+sidebarTitle: "Introduction"
+description: "Birthday is a dependency-free HTML greeting card featuring CSS animations, floating balloons, and a personalized wish list — no build step required."
+---
+
+Birthday is a self-contained animated greeting card built entirely inside a single `index.html` file. This page introduces what the project is, what it renders in the browser, and the set of visual features it ships with out of the box — so you know exactly what you're working with before you start customizing or deploying it.
+
+## What Is Birthday?
+
+Birthday is a zero-dependency HTML page that renders a polished, animated birthday greeting card directly in any modern browser. There is no JavaScript framework, no npm install, no build pipeline, and no external stylesheet or font CDN required. You open the file — or serve it from anywhere static files are accepted — and the card appears instantly, complete with floating balloons, a bouncing cake emoji, a fade-in entrance animation, and an interactive wish list.
+
+The card is written with semantic HTML, a single `<style>` block of vanilla CSS, and four `@keyframes` animations. Everything lives in one file, making it trivially easy to fork, edit, and ship.
+
+<Note>
+  The file is written in Spanish by default (`lang="es"`) — all text content, including the heading, subheading, introduction paragraph, wish list items, final message, and signature, can be replaced with any language without touching a single line of CSS.
+</Note>
+
+## Explore the Docs
+
+<CardGroup cols={2}>
+  <Card title="How It Works" icon="wand-magic-sparkles" href="/how-it-works">
+    Dive into the HTML structure, CSS classes, and keyframe animation system that power the card.
+  </Card>
+  <Card title="Customizing Messages" icon="pen-to-square" href="/customization/messages">
+    Learn how to update the heading, wish list items, final message, and signature text.
+  </Card>
+  <Card title="Customizing Colors" icon="palette" href="/customization/colors">
+    Swap the gradient background, balloon colors, and primary pink accent to match any palette.
+  </Card>
+  <Card title="Hosting & Deployment" icon="rocket" href="/deployment/hosting">
+    Deploy the single file to GitHub Pages, Netlify, Vercel, or any static host in minutes.
+  </Card>
+</CardGroup>
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Floating Balloons" icon="circle">
+    Four absolutely-positioned colored balloons (`b1`–`b4`) animate continuously with the `float` keyframe, each on a staggered delay.
+  </Card>
+  <Card title="Bouncing Cake Emoji" icon="cake-candles">
+    The 🎂 emoji uses the `bounce` keyframe — a smooth 2-second infinite loop that rises and falls 15px.
+  </Card>
+  <Card title="Fade-In Card Entrance" icon="eye">
+    The `.card` element fades in from `opacity: 0` and slides up 30px via the `fadeIn` keyframe on every page load.
+  </Card>
+  <Card title="Hover Slide on Wish List" icon="list">
+    Each `<li>` in `.birthday-list` slides 10px to the right on hover with a box-shadow deepening from `0.15` to `0.25` alpha.
+  </Card>
+  <Card title="Responsive Layout" icon="mobile">
+    Two media query breakpoints (`768px` and `480px`) adjust font sizes, card padding, and cake size for every screen.
+  </Card>
+  <Card title="Zero Dependencies" icon="box-archive">
+    No external fonts, no CDN links, no JavaScript. One file is all you need to open, share, or deploy the card.
+  </Card>
+</CardGroup>
+
+<Tip>
+  The fastest way to get started is to clone the repository and open `index.html` directly in your browser — no server required. Run `git clone https://github.com/erickcruzmision-heart/birthday.git` and double-click the file, or drag it into any browser tab.
+</Tip>

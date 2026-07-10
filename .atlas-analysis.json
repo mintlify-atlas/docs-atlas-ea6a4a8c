@@ -1,0 +1,47 @@
+{
+  "projectType": "frontend",
+  "projectName": "Birthday",
+  "projectDescription": "A beautiful, animated HTML birthday greeting card page designed to celebrate someone special with heartfelt messages, floating balloons, and festive styling.",
+  "theme": "almond",
+  "primaryColor": "#ff4d6d",
+  "lightColor": "#ff7eb3",
+  "darkColor": "#c2185b",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Overview",
+        "pages": ["introduction", "how-it-works"]
+      },
+      {
+        "group": "Customization",
+        "pages": ["customization/messages", "customization/colors", "customization/animations"]
+      },
+      {
+        "group": "Deployment",
+        "pages": ["deployment/hosting", "deployment/sharing"]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Animated birthday card with CSS keyframe animations",
+    "Floating balloon decorations",
+    "Bouncing cake emoji animation",
+    "Decorative wish list with hover effects",
+    "Responsive design for mobile and desktop",
+    "Gradient background with glassmorphism-style card",
+    "Fade-in entrance animation",
+    "Personalized heartfelt message and signature"
+  ],
+  "publicApiSurface": [
+    "index.html — main birthday greeting page",
+    ".card — central card container with fade-in animation",
+    ".balloon (b1–b4) — floating balloon elements with float animation",
+    ".birthday-list — decorated wish list with hover slide effect",
+    ".cake — bouncing emoji element",
+    ".final-message — closing personal message block",
+    ".signature — signed closing line",
+    "@keyframes bounce — cake bounce animation",
+    "@keyframes float — balloon float animation",
+    "@keyframes fadeIn — card entrance animation"
+  ]
+}

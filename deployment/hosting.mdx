@@ -1,0 +1,101 @@
+---
+title: "Host the Birthday Card on GitHub Pages or Netlify"
+sidebarTitle: "Hosting"
+description: "Deploy the Birthday greeting card to a public URL using GitHub Pages, Netlify, or Vercel — no server, no build step, just a static HTML file."
+---
+
+The Birthday card is a single, self-contained `index.html` file — everything it needs (styles, animations, and content) lives inside that one file. Because there is no build step, no package manager, and no external dependencies, you can deploy it to any static hosting platform in minutes and get a shareable public URL without spending a cent.
+
+## GitHub Pages
+
+GitHub Pages serves static files directly from a repository branch. It's free for public repos and requires zero configuration beyond a settings toggle.
+
+<Steps>
+  <Step title="Push the repo to GitHub">
+    Create a new repository on GitHub (or fork the existing one at
+    `https://github.com/erickcruzmision-heart/birthday`), then push your
+    `index.html` to the `main` branch.
+
+    ```bash
+    git init
+    git add index.html
+    git commit -m "Add birthday card"
+    git remote add origin https://github.com/<your-username>/<repo-name>.git
+    git push -u origin main
+    ```
+  </Step>
+  <Step title="Enable GitHub Pages">
+    In your repository, go to **Settings → Pages**. Under **Source**, choose
+    **Deploy from a branch**, select the `main` branch, and set the folder to
+    `/ (root)`. Click **Save**.
+  </Step>
+  <Step title="Open your live URL">
+    After a few seconds, GitHub will publish the card at:
+
+    ```
+    https://<your-username>.github.io/<repo-name>/
+    ```
+
+    Copy that URL and share it with the birthday person!
+  </Step>
+</Steps>
+
+## Netlify
+
+Netlify's drag-and-drop interface is the fastest path to a live URL — no account setup required beyond signing in.
+
+<Steps>
+  <Step title="Sign in to Netlify">
+    Go to [netlify.com](https://netlify.com) and sign in with GitHub, GitLab,
+    or an email address.
+  </Step>
+  <Step title="Drag and drop your folder">
+    On the Netlify dashboard, scroll to the **"Deploy manually"** drop zone at
+    the bottom of the page. Drag the folder that contains `index.html` onto
+    that area and release.
+  </Step>
+  <Step title="Get your live URL">
+    Netlify deploys the file instantly and generates a unique URL such as
+    `https://quirky-name-123456.netlify.app`. You can rename the subdomain in
+    **Site settings → General → Site details** to something more personal.
+  </Step>
+</Steps>
+
+## Vercel
+
+Vercel works from the command line and needs no framework configuration for a plain HTML file.
+
+<Steps>
+  <Step title="Install the Vercel CLI">
+    ```bash
+    npm i -g vercel
+    ```
+  </Step>
+  <Step title="Deploy from the project directory">
+    Navigate to the folder that contains `index.html` and run:
+
+    ```bash
+    vercel
+    ```
+  </Step>
+  <Step title="Follow the prompts">
+    Vercel will ask a few questions (project name, scope). When prompted to
+    select a framework preset, choose **Other** or simply press Enter to skip —
+    no preset is needed for a single HTML file. Vercel prints the live URL when
+    the deployment finishes.
+  </Step>
+</Steps>
+
+<Tip>
+  If you only want to share the card with one person, you can skip hosting
+  entirely and just email `index.html` as an attachment. The recipient
+  double-clicks the file and it opens directly in their browser — animations
+  and all.
+</Tip>
+
+<Note>
+  The Birthday card has **no external asset dependencies** — no CDN fonts, no
+  remote images, and no JavaScript libraries. Every style and animation is
+  inlined in the HTML file, so the page loads instantly even on a slow mobile
+  connection.
+</Note>

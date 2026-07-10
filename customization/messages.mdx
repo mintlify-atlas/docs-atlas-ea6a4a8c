@@ -1,0 +1,148 @@
+---
+title: "Customize Birthday Card Messages and Text"
+sidebarTitle: "Messages"
+description: "Learn how to personalize every text element in the Birthday card — the headline, intro paragraph, wish list, and signature — for any recipient."
+---
+
+All of the text content in the Birthday card lives directly in the HTML body of `index.html` — there is no separate config file, data layer, or JSON to edit. Every greeting, wish, and sign-off is a plain HTML element you can open in any text editor and change in seconds. This page walks through each editable text region in the order it appears on the card.
+
+## Heading
+
+The card opens with two heading elements stacked on top of each other. The `<h1>` carries the main celebration line and the `<h2>` is the recipient description — the personal label that makes the card feel specific to one person.
+
+```html
+<h1>🎉 ¡Feliz Cumpleaños! 🎉</h1>
+
+<h2>MÁS QUE UN AMIGO UN HERMANO</h2>
+```
+
+`<h1>` is the festive headline — change the text and emoji to suit the occasion. `<h2>` reads **"MÁS QUE UN AMIGO UN HERMANO"** ("More than a friend, a brother") and describes the relationship with the recipient. Replace it with any phrase that captures your connection, such as a nickname, a job title, or a short dedication.
+
+## Intro Paragraph
+
+Immediately below the cake emoji sits a short personal message marked up as a `<p>` with the class `intro`.
+
+```html
+<p class="intro">
+    Espero que tengas
+    una vida de muchas alegrías, experiencias increíbles y
+    momentos inolvidables. 
+    Te quiero mucho.
+</p>
+```
+
+Rewrite this paragraph to speak directly to your recipient. Keep sentences short — the card layout is narrow and long paragraphs can feel cramped. The `.intro` CSS rule sets `line-height: 1.6`, so multi-line text still reads comfortably.
+
+## Wish List
+
+The wish list is an unordered list (`<ul class="birthday-list">`) containing five `<li>` items. Each item is automatically decorated with a ✨ sparkle prefix via the `::before` pseudo-element in CSS — you do **not** need to add that character manually.
+
+```html
+<ul class="birthday-list">
+    <li>🎁 Que todos tus sueños se conviertan en realidad.</li>
+    <li>🌟 Que cada día esté lleno de felicidad y sonrisas.</li>
+    <li>🚀 Que alcances todas las metas que te propongas.</li>
+    <li>❤️ Que nunca te falten personas que te quieran.</li>
+    <li>🎊 Que disfrutes al máximo este día tan especial.</li>
+</ul>
+```
+
+**Adding an item** — paste a new `<li>` anywhere inside the `<ul>`. Each new item automatically receives the same pill styling and hover animation.
+
+**Removing an item** — delete the entire `<li>…</li>` line. The remaining items reflow with equal spacing.
+
+**Reordering** — cut a `<li>` line and paste it in the desired position. Order in the HTML is order on screen.
+
+**Changing the leading emoji** — each item begins with a decorative emoji before the text. Swap it for any emoji that feels appropriate, or remove it entirely. The CSS `::before` sparkle is separate and will still appear.
+
+## Closing Message & Signature
+
+Two elements appear at the bottom of the card: a `.final-message` paragraph and a `.signature` element.
+
+```html
+<p class="final-message">
+    Gracias por haber llegado a mi vida y por todos los buenos momentos compartidos.
+</p>
+
+<div class="signature">
+    ❤️ Con mucho amor y cariño. 
+</div>
+```
+
+`.final-message` is a calm, reflective sentence that follows the wish list. Use it for a personal anecdote, an inside joke, or a heartfelt thank-you.
+
+`.signature` is the sign-off displayed in bold pink (`#ff4d6d`). Replace the text with your name, a nickname, or a group credit such as "❤️ The whole team".
+
+## Before & After Example
+
+The example below shows the original Spanish content alongside a complete English translation adapted for a different recipient.
+
+<Tabs>
+  <Tab title="Original (Spanish)">
+    ```html
+    <h1>🎉 ¡Feliz Cumpleaños! 🎉</h1>
+
+    <h2>MÁS QUE UN AMIGO UN HERMANO</h2>
+
+    <div class="cake">🎂</div>
+
+    <p class="intro">
+        Espero que tengas
+        una vida de muchas alegrías, experiencias increíbles y
+        momentos inolvidables. 
+        Te quiero mucho.
+    </p>
+
+    <ul class="birthday-list">
+        <li>🎁 Que todos tus sueños se conviertan en realidad.</li>
+        <li>🌟 Que cada día esté lleno de felicidad y sonrisas.</li>
+        <li>🚀 Que alcances todas las metas que te propongas.</li>
+        <li>❤️ Que nunca te falten personas que te quieran.</li>
+        <li>🎊 Que disfrutes al máximo este día tan especial.</li>
+    </ul>
+
+    <p class="final-message">
+        Gracias por haber llegado a mi vida y por todos los buenos momentos compartidos.
+    </p>
+
+    <div class="signature">
+        ❤️ Con mucho amor y cariño. 
+    </div>
+    ```
+  </Tab>
+  <Tab title="Example (English)">
+    ```html
+    <h1>🎉 Happy Birthday! 🎉</h1>
+
+    <h2>MY FAVORITE COLLEAGUE</h2>
+
+    <div class="cake">🎂</div>
+
+    <p class="intro">
+        Wishing you a day filled with joy, laughter, and all
+        the things that make you smile. So glad to have you
+        in our corner!
+    </p>
+
+    <ul class="birthday-list">
+        <li>🎁 May every one of your dreams come true.</li>
+        <li>🌟 May each day bring new reasons to smile.</li>
+        <li>🚀 May you crush every goal you set your mind to.</li>
+        <li>❤️ May you always be surrounded by people who care.</li>
+        <li>🎊 May today be the best day of the whole year.</li>
+    </ul>
+
+    <p class="final-message">
+        Thank you for all the laughs, support, and memories we've shared together.
+    </p>
+
+    <div class="signature">
+        ❤️ With love, the whole team. 
+    </div>
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  When you translate the card, also update the `lang` attribute on the opening `<html>` tag to match the language you're using. The original file declares `<html lang="es">` for Spanish. For an English card, change it to `<html lang="en">`. This attribute helps screen readers and search engines identify the page language correctly.
+</Note>

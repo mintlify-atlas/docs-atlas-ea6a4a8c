@@ -1,0 +1,173 @@
+---
+title: "Customize Animations in the Birthday Card"
+sidebarTitle: "Animations"
+description: "Adjust timing, distance, and easing of the three CSS keyframe animations — fadeIn, bounce, and float — to tune the Birthday card's visual energy."
+---
+
+The Birthday card comes alive through three CSS keyframe animations defined in the `<style>` block of `index.html`. Each animation targets a different element — the card panel, the cake emoji, and the balloons — and together they give the page its playful, celebratory feel. Because all animation code lives in the same single file as the HTML, you can tune every timing value, travel distance, or easing curve by editing a handful of CSS properties without touching any build tool or external asset.
+
+## fadeIn (Card Entrance)
+
+When the page loads, the entire card fades in from below. The `@keyframes fadeIn` rule starts the card transparent and shifted down 30 pixels, then transitions it to fully visible at its natural position.
+
+```css
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+```
+
+It is applied to the `.card` element:
+
+```css
+.card {
+    animation: fadeIn 1s ease;
+}
+```
+
+**Parameters to tweak:**
+
+- **Duration** (`1s`) — controls how long the entrance takes. Increase to `1.5s` or `2s` for a more graceful reveal; decrease to `0.4s` for a snappy pop-in.
+- **Timing function** (`ease`) — `ease` starts fast and decelerates. Try `ease-out` for a smoother landing, or `cubic-bezier(0.22, 1, 0.36, 1)` for a spring-like feel.
+- **Delay** — add a delay as a fourth value to hold the card off-screen briefly before it appears, useful if you add an intro overlay.
+
+**Example — slower entrance with a short delay:**
+
+```css
+.card {
+    animation: fadeIn 1.5s ease 0.2s both;
+}
+```
+
+The `both` fill-mode ensures the card stays invisible during the `0.2s` delay rather than flashing into view before the animation starts.
+
+## bounce (Cake Emoji)
+
+The cake emoji 🎂 bobs up and down continuously using the `@keyframes bounce` rule. The emoji moves vertically by `15px` at the midpoint of each cycle.
+
+```css
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+```
+
+It is applied to the `.cake` element:
+
+```css
+.cake {
+    animation: bounce 2s infinite;
+}
+```
+
+**Travel distance** (`-15px`) — the negative Y value lifts the emoji upward. Increase the absolute number for a more exaggerated hop (e.g., `-25px`), or reduce it to `-5px` for a subtle pulse.
+
+**Duration** (`2s`) — one full up-and-down cycle takes 2 seconds. A shorter duration (e.g., `1s`) makes the bounce feel energetic and urgent; a longer one (e.g., `3s`) feels lazy and relaxed.
+
+**Example — more dramatic bounce:**
+
+```css
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+}
+
+.cake {
+    animation: bounce 1.5s infinite;
+}
+```
+
+## float (Balloons)
+
+The four balloons drift upward and back on a slow, looping cycle using `@keyframes float`. Each balloon travels `20px` upward at the halfway point of its animation.
+
+```css
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+```
+
+It is applied to every element with the class `.balloon`:
+
+```css
+.balloon {
+    animation: float 5s ease-in-out infinite;
+}
+```
+
+**Staggered delays** — the four balloons share the same `float` keyframes but start at different points in their cycle, creating a natural, wave-like motion:
+
+| Balloon | Class | `animation-delay` |
+|---|---|---|
+| 1 | `.b1` | `0s` (no delay — starts immediately) |
+| 2 | `.b2` | `1s` |
+| 3 | `.b3` | `2s` |
+| 4 | `.b4` | `3s` |
+
+These delays are set directly on the individual balloon classes:
+
+```css
+.b2 { animation-delay: 1s; }
+.b3 { animation-delay: 2s; }
+.b4 { animation-delay: 3s; }
+```
+
+**Example — more movement, faster float:**
+
+```css
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-35px);
+    }
+}
+
+.balloon {
+    animation: float 3s ease-in-out infinite;
+}
+```
+
+Reducing the duration from `5s` to `3s` makes the balloons feel lighter and more buoyant. Increasing the travel to `-35px` adds a more dramatic drift without breaking the stagger effect.
+
+## Disabling Animations
+
+Some users prefer reduced motion for accessibility or comfort reasons. The `prefers-reduced-motion` media query lets you respect that preference without removing the animations from the stylesheet entirely.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .card, .cake, .balloon {
+    animation: none;
+  }
+}
+```
+
+Add this block at the end of the `<style>` section in `index.html`. When the user has enabled the reduced-motion system preference, all three animations will be suppressed and the elements will render in their default static positions.
+
+<Note>
+  During development, you can freeze any animation without deleting it by setting `animation-play-state: paused` on the element in DevTools — or simply set `animation: none` on the selector you're inspecting. Both approaches leave the keyframe definition intact so you can re-enable the animation quickly.
+</Note>
+
+<Tip>
+  Browser DevTools offer a dedicated Animations panel (Chrome: **More Tools → Animations**; Firefox: **Inspector → Animations**) that lets you scrub through a keyframe timeline, slow playback down to as little as 10%, and adjust `animation-duration` in real time. Use it to dial in the exact timing and travel distance you want before writing the final values back into `index.html`.
+</Tip>
